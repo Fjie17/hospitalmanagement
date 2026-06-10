@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>医院信息管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/css/index.css" />
+	<!-- 引入 Bootstrap 5（如未引入） -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+	<header>
+		<div class="left">
+			<img src="/images/logo.png" alt="Hospital LOGO" class="logo">
+			<h3 class="slogan">智能医院管理系统</h3>
+		</div>
+		<nav>
+			<a href="#about">关于我们</a>
+			<a href="#health-tips">健康小知识</a>
+			<a href="#services">关于医生</a>
+			<a href="#" data-bs-toggle="modal" data-bs-target="#donateModal">捐赠</a>
+			<a th:href="@{/login}">
+				<img src="/images/login.png" alt="Login" style="height: 20px; margin-right: 5px;">
+				登录
+			</a>
+		</nav>
+	</header>
+
+	<section class="banner">
+		<div class="slider">
+			<div class="slides">
+				<div class="slide active" style="background-image: url('/images/banner1.jpg');"></div>
+				<div class="slide" style="background-image: url('/images/banner2.jpg');"></div>
+				<div class="slide" style="background-image: url('/images/banner3.jpg');"></div>
+				<div class="slide" style="background-image: url('/images/banner4.jpg');"></div>
+				<div class="slide" style="background-image: url('/images/banner5.jpg');"></div>
+			</div>
+			<div class="dots">
+				<span class="dot active" data-index="0"></span>
+				<span class="dot" data-index="1"></span>
+				<span class="dot" data-index="2"></span>
+				<span class="dot" data-index="3"></span>
+				<span class="dot" data-index="4"></span>
+			</div>
+		</div>
+	</section>
+
+	<section class="doctor-list" id="services" style="position: relative;">
+		<h2 style="text-align:center; color:#005caa; margin-bottom:2rem;">
+			医生信息展示
+			<a href="/doctor_list"
+				style="position: absolute; right: 0; top: 0; font-size: 1rem; color: #007bff; text-decoration: underline;">
+				展开全部 &gt;
+			</a>
+		</h2>
+		<div class="doctor-cards">
+			<div class="doctor-card" th:each="doctor : ${doctors}"
+				th:style="|background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('/images/bg-${doctor.gender == '女' ? 'female' : 'male'}.png'); background-size: cover; background-position: center;|"
+				style="width: 260px; transition: 0.3s;"
+				onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)';"
+				onmouseout="this.style.transform='';this.style.boxShadow='0 4px 8px rgba(0,0,0,0.05)';">
+				<h3 th:text="${doctor.name}">姓名</h3>
+				<p><strong>科室：</strong><span th:text="${doctor.departmentName}">内科</span></p>
+				<p><strong>电话：</strong><span th:text="${doctor.phone}">123456</span></p>
+				<p><strong>职位：</strong><span th:text="${doctor.title}">主任医师</span></p>
+			</div>
+
+		</div>
+	</section>
+	<section id="ai-health-advisor" class="container my-5">
+		<h2 class="text-primary mb-4" style="color:#005caa;">健康--GPT</h2>
+		<div class="input-group mb-3">
+			<input type="text" id="ai-question" class="form-control" placeholder="请输入问题...">
+			<button class="btn btn-primary" onclick="askHealthAi()">询问</button>
+		</div>
+		<div id="ai-answer" class="alert alert-info d-none" role="alert"></div>
+	</section>
+	<section id="health-tips" class="health-tips-section container my-5">
+		<div class="d-flex align-items-center justify-content-between mb-4">
+			<h2 style="color:#005caa;">健康小知识</h2>
+			<input id="search-input" type="text" placeholder="查询标题或简介" class="form-control" style="max-width: 300px;"
+				oninput="searchTips()" />
+		</div>
+
+		<div id="tips-container">
+			<div th:each="tip : ${healthTips}" class="health-tip-item">
+				<a th:href="${tip.videoUrl}" target="_blank" class="tip-image-wrapper">
+					<img th:src="@{${tip.imageUrl}}" alt="Health Image" class="tip-image rounded shadow" />
+				</a>
+				<div class="tip-content">
+					<h4 th:text="${tip.title}" class="tip-title">标题</h4>
+					<p th:text="${tip.summary}" class="tip-summary">简介内容</p>
+					<span th:text="${tip.category}" class="tip-category">分类</span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- about-us.html -->
+	<section id="about" class="about-us-section container my-5 py-4">
+		<div class="text-center mb-4">
+			<h2 class="about-title">关于我们</h2>
+			<p class="about-subtitle">我们致力于提供高效、专业、人性化的医疗服务</p>
+		</div>
+
+		<div class="row align-items-center mb-5">
+			<div class="col-md-6 mb-3 mb-md-0">
+				<img src="/images/hospital_building.jpg" alt="医院外景" class="img-fluid rounded shadow about-image">
+			</div>
+			<div class="col-md-6">
+				<h4 class="about-heading">医院简介</h4>
+				<p class="about-text">
+					本医院成立于1887年，是一家集医疗、教学、科研为一体的综合性现代化医院。我们配备先进的医疗设备和优秀的医生团队，致力于为每一位患者提供优质的诊疗服务。
+				</p>
+				<ul class="about-list">
+					<li>三甲综合医院</li>
+					<li>30+临床科室</li>
+					<li>每日接诊 2000+ 患者</li>
+					<li>多项人工智能辅助诊疗技术</li>
+				</ul>
+				<p class="about-text">
+					地址：浙江省杭州市拱墅区浙江工业大学朝晖校区
+				</p>
+			</div>
+		</div>
+
+		<div class="row text-center">
+			<div class="col-md-3">
+				<div class="about-stat shadow-sm">
+					<h3>1887</h3>
+					<p>创立时间</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="about-stat shadow-sm">
+					<h3>500+</h3>
+					<p>医护人员</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="about-stat shadow-sm">
+					<h3>80,000+</h3>
+					<p>年服务人次</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="about-stat shadow-sm">
+					<h3>30+</h3>
+					<p>科室</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="site-footer">
+		<div class="footer-container">
+			<div class="footer-left">
+				<h5></h5>
+				<p>&copy; 2025 医院信息管理系统 · 版权所有</p>
+				<p>地址: 浙江省杭州市拱墅区浙江工业大学朝晖校区</p>
+				<p>电话: +86 18868424299</p>
+				<p>版权号: 浙江 ICP No. 2025001234</p>
+			</div>
+			<div class="footer-right">
+				<h6>快速导航</h6>
+				<ul class="footer-links">
+					<li><a href="/">主页</a></li>
+					<li><a href="#about">关于我们</a></li>
+					<li><a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">联系我们</a></li>
+					<li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">隐私政策</a></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+
+	<!-- 捐赠 Modal -->
+	<div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content shadow">
+				<div class="modal-header">
+					<h5 class="modal-title" id="donateModalLabel">支持医院系统建设</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+				</div>
+				<div class="modal-body text-center">
+					<p>您的支持将帮助我们持续改进系统服务</p>
+					<img src="/images/donate_qr.jpg" alt="捐赠二维码" style="max-width: 200px;">
+					<p class="mt-2">扫码通过微信/支付宝捐赠</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 联系我们 Modal -->
+	<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="contactModalLabel">联系我们</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+				</div>
+				<div class="modal-body">
+					<p>如有任何问题，欢迎通过以下方式联系我们：</p>
+					<ul>
+						<li><strong>电话：</strong> 18868424299</li>
+						<li><strong>邮箱：</strong> 2437657062@qq.com</li>
+						<li><strong>地址：</strong> 浙江省杭州市拱墅区浙江工业大学朝晖校区</li>
+					</ul>
+
+					<h6>在线留言</h6>
+					<form id="contactForm" action="#" method="post">
+						<div class="mb-3">
+							<label for="contactName" class="form-label">姓名：</label>
+							<input type="text" class="form-control" id="contactName" name="name" required>
+						</div>
+						<div class="mb-3">
+							<label for="contactEmail" class="form-label">电子邮箱：</label>
+							<input type="email" class="form-control" id="contactEmail" name="email" required>
+						</div>
+						<div class="mb-3">
+							<label for="contactMessage" class="form-label">留言内容：</label>
+							<textarea class="form-control" id="contactMessage" name="message" rows="4"
+								required></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">发送留言</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 隐私政策 Modal -->
+	<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="privacyModalLabel">隐私政策</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+				</div>
+				<div class="modal-body">
+					<p>患者中心智能医疗系统高度重视您的隐私和个人数据保护。</p>
+					<h6>我们收集的信息</h6>
+					<p>仅收集必要信息以提供医疗服务，包括联系方式、病历和预约记录。</p>
+					<h6>信息使用方式</h6>
+					<p>您的信息仅用于改善医疗服务、管理预约及遵守法律法规。</p>
+					<h6>数据安全</h6>
+					<p>我们采用严格的安全措施防止数据泄露、篡改或未经授权的访问。</p>
+					<h6>您的权利</h6>
+					<p>您有权随时查询、更新或要求删除个人数据。</p>
+					<p>如有隐私政策相关问题，请通过<a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">联系我们</a>窗口咨询。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 弹框 -->
+	<!-- 提交成功弹窗 -->
+	<div id="successModal" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content text-center p-4">
+				<div class="modal-body">
+					<h5 class="text-success">消息提交成功！</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 回到顶部按钮 -->
+	<button id="backToTopBtn" title="回到顶部" aria-label="Back to top">
+		<i class="bi bi-arrow-up-short"></i>
+	</button>
+
+
+
+	<!-- Bootstrap Bundle JS (包含 Popper) -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<script src="/js/index.js"></script>
+</body>
+
+</html>

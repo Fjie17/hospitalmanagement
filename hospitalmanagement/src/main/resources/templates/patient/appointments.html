@@ -1,0 +1,23 @@
+<!-- templates/patient/appointments.html -->
+<div th:fragment="appointmentList">
+	<h4 class="mb-3">我的预约记录</h4>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>医生姓名</th>
+				<th>时间</th>
+				<th>状态</th>
+				<th>备注</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="appt : ${appointments}">
+				<td data-label="医生姓名" th:text="${appt.doctor.name}">医生名</td>
+				<td data-label="时间" th:text="${#temporals.format(appt.appointmentTime, 'yyyy-MM-dd HH:mm')}">时间</td>
+				<td data-label="状态" th:text="${appt.status}">状态</td>
+				<td data-label="备注" th:text="${appt.note}">备注</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>

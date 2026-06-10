@@ -1,0 +1,47 @@
+/* 公告列表整体卡片 */
+.notice-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: .5rem;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	margin-bottom: 1.5rem;
+}
+
+/* 公告标题点击区域 */
+.notice-title {
+	font-weight: 600;
+	font-size: 1.1rem;
+	color: #007bff;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.notice-title:hover {
+	color: #0056b3;
+	text-decoration: underline;
+}
+
+/* 公告时间 */
+.notice-time {
+	font-size: 0.9rem;
+	color: #6c757d;
+}
+
+/* 公告详情内容样式 */
+.notice-content {
+	font-size: 1rem;
+	line-height: 1.6;
+	color: #333;
+	white-space: pre-wrap;
+}
+
+/* 返回按钮 */
+.notice-back-btn {
+	margin-top: 1rem;
+}
+
+/* 细节美化 */
+.notice-divider {
+	border-top: 1px solid #eee;
+	margin: 1rem 0;
+}

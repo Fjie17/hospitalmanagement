@@ -1,0 +1,817 @@
+body {
+	background-color: #f9f9f9;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header.bg-primary {
+	background-color: #0b3d91 !important;
+}
+
+#userNameLink {
+	color: #fff;
+	font-weight: 600;
+	transition: color 0.3s ease;
+	cursor: pointer;
+}
+
+#userNameLink:hover {
+	color: #a8c0ff;
+	text-decoration: underline;
+}
+
+.btn-outline-light {
+	color: #fff;
+	border-color: #fff;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-light:hover {
+	background-color: #174ea6;
+	color: #fff;
+	border-color: #174ea6;
+}
+
+button.btn-sm {
+	color: #fff;
+}
+
+button.btn-sm:hover {
+	background-color: #174ea6;
+	color: #fff;
+}
+
+#sidebar.collapsed {
+	margin-left: -220px;
+}
+
+#recommendation-bar {
+	width: 280px;
+	background-color: #f8f9fa;
+	padding: 1rem;
+	border-left: 1px solid #dee2e6;
+}
+
+.recommend-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: .5rem;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+main {
+	background-color: #fff;
+}
+
+.welcome-card {
+	background: linear-gradient(135deg, #007bff, #3399ff);
+	color: white;
+	border: none;
+}
+
+.welcome-card h4 {
+	border-bottom: none;
+	margin-bottom: 0.75rem;
+	/* 你可以适当调整间距 */
+	color: rgb(0, 0, 0);
+	/* 保持白色字体 */
+	font-weight: 700;
+	/* 保持加粗 */
+}
+
+.quick-card {
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	border: 1px solid #dee2e6;
+	border-radius: 0.5rem;
+}
+
+.quick-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 0.5rem 1rem rgba(0, 123, 255, 0.1);
+}
+
+.modern-card {
+	border: 1px solid #e2e6ea;
+	border-radius: 12px;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+	background-color: #ffffff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.modern-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(0, 123, 255, 0.12);
+	border-color: #007bff33;
+}
+
+.icon {
+	font-size: 2rem;
+	color: #007bff;
+	margin-bottom: 10px;
+}
+
+.card-label {
+	font-size: 1rem;
+	font-weight: 500;
+	color: #333;
+}
+
+.card-label small {
+	display: block;
+	font-weight: 400;
+	font-size: 0.85rem;
+	color: #6c757d;
+	margin-top: 4px;
+}
+
+
+/* Sidebar container */
+#sidebar {
+	min-width: 220px;
+	max-width: 220px;
+	background-color: #f8f9fa;
+	border-right: 1px solid #dee2e6;
+	padding: 1.5rem 1rem;
+	height: 100vh;
+	/* ✅ 高度撑满整页 */
+	overflow-y: auto;
+	/* ✅ 内容多时可滚动 */
+	position: sticky;
+	top: 0;
+}
+
+
+/* Section titles */
+#sidebar h5 {
+	font-size: 1rem;
+	color: #0d6efd;
+	margin-top: 1.5rem;
+	margin-bottom: 0.75rem;
+	padding-left: 0.25rem;
+	border-left: 4px solid #0d6efd;
+}
+
+/* Nav links */
+#sidebar .nav-link {
+	color: #333;
+	font-size: 0.95rem;
+	padding: 8px 12px;
+	border-radius: 6px;
+	transition: all 0.2s ease-in-out;
+}
+
+#sidebar .nav-link:hover {
+	background-color: #e7f1ff;
+	color: #0d6efd;
+	font-weight: 500;
+}
+
+/* 标题样式 */
+.toggle-header {
+	font-size: 1rem;
+	color: #0d6efd;
+	margin-bottom: 0.75rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	user-select: none;
+	padding-left: 0.25rem;
+	border-left: 4px solid #0d6efd;
+}
+
+/* 折叠图标默认向下 */
+.toggle-icon {
+	font-size: 1rem;
+	transition: transform 0.2s ease;
+}
+
+/* 折叠状态时箭头指向右 */
+.collapsed .toggle-icon {
+	transform: rotate(-90deg);
+}
+
+/* 折叠的 ul 隐藏 */
+.sidebar-list.collapsed {
+	display: none;
+}
+
+
+/* Active state support (可选) */
+#sidebar .nav-link.active {
+	background-color: #d0e7ff;
+	font-weight: bold;
+	color: #0b5ed7;
+}
+
+/* Space between sections */
+#sidebar ul.nav+h5 {
+	margin-top: 2rem;
+}
+
+
+.card-title {
+	font-size: 1.5rem;
+}
+
+.navbar-brand {
+	font-size: 1.3rem;
+	font-weight: bold;
+}
+
+/* 个人信息 */
+.card {
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+	border-bottom: none;
+	border-radius: 12px 12px 0 0;
+	background: linear-gradient(90deg, #0d6efd 0%, #003366 100%);
+	color: #fff;
+	font-weight: 600;
+	padding: 1rem 1.5rem;
+}
+
+#editBtn {
+	font-weight: 600;
+	background-color: #fff;
+	color: #0d6efd;
+	border-radius: 8px;
+	border: 1.5px solid #0d6efd;
+	transition: background-color 0.3s, color 0.3s;
+	padding: 0.35rem 1rem;
+}
+
+#editBtn:hover {
+	background-color: #0d6efd;
+	color: white;
+}
+
+.card-body dl dt {
+	font-weight: 600;
+	color: #212529;
+	font-size: 1rem;
+}
+
+.card-body dl dd {
+	font-size: 1rem;
+	color: #495057;
+	margin-bottom: 1rem;
+}
+
+.card-body dl dd input.form-control {
+	max-width: 300px;
+}
+
+.text-end button {
+	border-radius: 8px;
+	padding: 0.45rem 1.2rem;
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.text-end button.btn-success {
+	background-color: #004080;
+	border-color: #004080;
+}
+
+.text-end button.btn-success:hover {
+	background-color: #00264d;
+	border-color: #00264d;
+}
+
+.text-end button.btn-secondary {
+	background-color: #e2e6ea;
+	border-color: #dae0e5;
+	color: #495057;
+}
+
+.text-end button.btn-secondary:hover {
+	background-color: #cbd3da;
+	border-color: #b8c1cb;
+}
+
+.alert {
+	border-radius: 12px;
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.view-mode {
+	font-size: 1rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+}
+
+
+#recommendation-bar {
+	padding: 1rem;
+	background-color: #f8fbff;
+	border-left: 1px solid #e0e0e0;
+}
+
+#recommendation-bar .btn {
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+/* ai-modal.css */
+.modal-content {
+	border-radius: 10px;
+	background: #fefefe;
+}
+
+#aiModalAnswer {
+	font-size: 0.95rem;
+	white-space: pre-line;
+}
+
+
+/* 公告卡片列表优化 */
+.list-group-item:hover {
+	background-color: #f8f9fa;
+	transition: background-color 0.2s ease-in-out;
+}
+
+/* 公告详情文字样式 */
+.notice-content {
+	font-size: 1rem;
+	line-height: 1.7;
+}
+
+/* 病历列表整体卡片内边距和背景 */
+
+.card-body {
+	background-color: #f9fafb;
+	padding: 1.5rem;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#medical-record-list {
+	list-style: none;
+	padding-left: 0;
+}
+
+#medical-record-list .list-group-item {
+	background-color: #ffffff;
+	border: 1px solid #e0e6ed;
+	border-radius: 10px;
+	margin-bottom: 12px;
+	padding: 1rem 1.5rem;
+	transition: box-shadow 0.3s ease;
+}
+
+#medical-record-list .list-group-item:hover {
+	box-shadow: 0 4px 15px rgba(13, 110, 253, 0.2);
+}
+
+#medical-record-list strong {
+	font-size: 1.1rem;
+	color: #0d6efd;
+	/* Bootstrap 主蓝 */
+	font-weight: 600;
+	display: block;
+	margin-bottom: 6px;
+}
+
+#medical-record-list span {
+	font-size: 0.95rem;
+	color: #495057;
+	display: block;
+	margin-top: 3px;
+}
+
+.text-muted {
+	font-style: italic;
+	color: #6c757d !important;
+}
+
+.d-flex.justify-content-between {
+	align-items: center;
+}
+
+@media (max-width: 576px) {
+	#medical-record-list .list-group-item {
+		padding: 1rem;
+	}
+}
+
+
+/* 注册 */
+/* 容器外层，适配各种屏幕，居中 */
+.register-container {
+	background-color: #f8fbff;
+	padding: 2rem 2.5rem;
+	border-radius: 12px;
+	max-width: 720px;
+	margin: 30px auto;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	border: 1px solid #e3e7ec;
+	animation: fadeIn 0.25s ease-in-out;
+}
+
+/* 标题更加突出，边距更协调 */
+.register-title {
+	color: #0d6efd;
+	font-weight: 600;
+	font-size: 1.5rem;
+	margin-bottom: 1.5rem;
+	text-align: center;
+	border-bottom: 1px solid #d6e9ff;
+	padding-bottom: 0.5rem;
+}
+
+/* 表单整体风格统一 */
+.register-form .form-label {
+	font-weight: 500;
+	color: #34495e;
+	margin-bottom: 0.4rem;
+}
+
+.register-form .form-control,
+.register-form .form-select {
+	border-radius: 8px;
+	padding: 10px 14px;
+	border: 1px solid #ced4da;
+	transition: all 0.25s;
+	font-size: 1rem;
+}
+
+.register-form .form-control:focus,
+.register-form .form-select:focus {
+	border-color: #0d6efd;
+	box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+	outline: none;
+}
+
+.btn-register {
+	background: #003366;
+	/* 深蓝色 */
+	color: #fff;
+	font-weight: 600;
+	border-radius: 8px;
+	font-size: 1.1rem;
+	padding: 0.6rem;
+	transition: background 0.3s ease-in-out;
+	border: none;
+}
+
+.btn-register:hover {
+	background: #00254d;
+	/* 深蓝 hover 更深一点 */
+}
+
+.invalid-feedback {
+	font-size: 0.875rem;
+	color: #dc3545;
+	margin-top: 0.25rem;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* appointments.css */
+
+h4 {
+	color: #0d6efd;
+	/* Bootstrap 主蓝色 */
+	font-weight: 700;
+	margin-bottom: 1.5rem;
+	border-bottom: 2px solid #0d6efd;
+	padding-bottom: 0.3rem;
+}
+
+.table {
+	background-color: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	overflow: hidden;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+.table thead tr {
+	background: linear-gradient(90deg, #0d6efd, #3a8dff);
+	color: #ffffff;
+	font-weight: 600;
+}
+
+.table thead th {
+	border: none;
+	padding: 0.75rem 1.25rem;
+	text-align: left;
+	font-size: 1rem;
+}
+
+.table tbody tr {
+	border-bottom: 1px solid #e9ecef;
+	transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+	background-color: #f0f8ff;
+}
+
+.table tbody td {
+	padding: 0.75rem 1.25rem;
+	color: #495057;
+	font-size: 0.95rem;
+}
+
+.table tbody td:first-child {
+	font-weight: 600;
+	color: #0d6efd;
+}
+
+.table tbody td:nth-child(3) {
+	font-weight: 600;
+	color: #198754;
+	/* 绿色，状态“已确认”等积极状态 */
+}
+
+/* 状态颜色示例 */
+.table tbody td:contains('已取消') {
+	color: #dc3545 !important;
+	/* 红色取消状态 */
+}
+
+/* 响应式处理 */
+@media (max-width: 576px) {
+	.table thead {
+		display: none;
+	}
+
+	.table,
+	.table tbody,
+	.table tr,
+	.table td {
+		display: block;
+		width: 100%;
+	}
+
+	.table tr {
+		margin-bottom: 1rem;
+		border-bottom: 2px solid #0d6efd;
+		border-radius: 8px;
+		box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1);
+		padding: 1rem;
+	}
+
+	.table td {
+		text-align: right;
+		padding-left: 50%;
+		position: relative;
+	}
+
+	.table td::before {
+		content: attr(data-label);
+		position: absolute;
+		left: 1rem;
+		width: 45%;
+		padding-left: 0.5rem;
+		font-weight: 700;
+		text-align: left;
+		color: #0d6efd;
+	}
+}
+
+/* review.css */
+
+.review-container {
+	max-width: 700px;
+	margin: 20px auto;
+	padding: 25px 30px;
+	background-color: #f9fbff;
+	border-radius: 12px;
+	box-shadow: 0 8px 20px rgba(13, 110, 253, 0.15);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.review-title {
+	color: #0d6efd;
+	font-weight: 700;
+	margin-bottom: 25px;
+	border-left: 6px solid #0d6efd;
+	padding-left: 10px;
+	font-size: 1.8rem;
+}
+
+.review-form .form-label {
+	font-weight: 600;
+	color: #333;
+}
+
+.review-form .form-select,
+.review-form textarea.form-control {
+	border-radius: 8px;
+	border: 1.5px solid #0d6efd;
+	transition: border-color 0.3s ease;
+}
+
+.review-form .form-select:focus,
+.review-form textarea.form-control:focus {
+	border-color: #0848d6;
+	box-shadow: 0 0 8px rgba(13, 110, 253, 0.3);
+	outline: none;
+}
+
+.submit-btn {
+	background-color: #0848d6;
+	border-color: #0848d6;
+	width: 100%;
+	padding: 12px 0;
+	font-weight: 600;
+	font-size: 1.1rem;
+	border-radius: 10px;
+	transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover,
+.submit-btn:focus {
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+	box-shadow: 0 0 12px rgba(13, 110, 253, 0.5);
+}
+
+.review-divider {
+	margin: 30px 0;
+	border: none;
+	height: 2px;
+	background: linear-gradient(90deg, #0d6efd, #3a8dff);
+	border-radius: 10px;
+}
+
+.review-list-title {
+	color: #333;
+	font-weight: 700;
+	margin-bottom: 15px;
+}
+
+.review-list {
+	max-height: 300px;
+	overflow-y: auto;
+	padding-right: 10px;
+}
+
+/* 单条评价样式 */
+.review-item {
+	background-color: white;
+	border-radius: 10px;
+	padding: 15px 20px;
+	margin-bottom: 15px;
+	box-shadow: 0 3px 10px rgba(13, 110, 253, 0.1);
+	transition: transform 0.3s ease;
+}
+
+.review-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(13, 110, 253, 0.2);
+}
+
+.review-item .review-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.review-item .doctor-name {
+	font-weight: 700;
+	color: #0d6efd;
+	font-size: 1.1rem;
+}
+
+.review-item .rating-stars {
+	color: #ffc107;
+	/* 星星黄色 */
+	font-size: 1.1rem;
+}
+
+.review-item .review-content {
+	font-size: 0.95rem;
+	color: #555;
+	line-height: 1.4;
+}
+
+
+/* recommendation-bar.css */
+
+.recommendation-bar {
+	background: linear-gradient(135deg, #f9fbff, #e9f0ff);
+	border-radius: 16px;
+	padding: 24px;
+	box-shadow: 0 6px 18px rgba(0, 85, 255, 0.08);
+	max-width: 300px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 标题样式 */
+.sidebar-title {
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: #0d6efd;
+	margin-bottom: 20px;
+	border-left: 5px solid #0d6efd;
+	padding-left: 10px;
+}
+
+/* 搜索框美化 */
+.sidebar-search {
+	border: 2px solid #cfe2ff;
+	border-radius: 10px;
+	padding: 8px 12px;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.sidebar-search:focus {
+	border-color: #0d6efd;
+	box-shadow: 0 0 10px rgba(13, 110, 253, 0.25);
+	outline: none;
+}
+
+/* 推荐列表样式 */
+.sidebar-tips {
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.sidebar-tips .tip-item {
+	background-color: #ffffff;
+	border: 1px solid #e0e6f0;
+	border-radius: 10px;
+	padding: 12px 16px;
+	margin-bottom: 12px;
+	font-size: 0.95rem;
+	color: #333;
+	transition: background-color 0.3s ease;
+}
+
+.sidebar-tips .tip-item:hover {
+	background-color: #eef5ff;
+	cursor: pointer;
+}
+
+/* AI 按钮美化 */
+.btn-ai {
+	background-color: #0d6efd;
+	color: white;
+	font-weight: 600;
+	border-radius: 12px;
+	padding: 10px 14px;
+	border: none;
+	transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-ai:hover {
+	background-color: #0a58ca;
+	box-shadow: 0 0 10px rgba(13, 110, 253, 0.3);
+}
+
+/* footer.css */
+
+.custom-footer {
+	background: linear-gradient(90deg, #f8f9fa, #e9f0ff);
+	border-top: 1px solid #dbe4f0;
+	font-size: 0.95rem;
+	color: #6c757d;
+	box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.custom-footer .footer-link {
+	color: #0d6efd;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.3s ease;
+}
+
+.custom-footer .footer-link:hover {
+	color: #084298;
+	text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+	.custom-footer .container {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.custom-footer .footer-link {
+		display: block;
+		margin-top: 5px;
+	}
+}

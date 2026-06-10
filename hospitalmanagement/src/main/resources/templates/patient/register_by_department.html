@@ -1,0 +1,57 @@
+<!-- register_by_department.html -->
+<div th:fragment="content" class="register-container">
+	<h3 class="mb-4">按科室挂号</h3>
+	<form method="post" th:action="@{/patient/register-department}" id="departmentForm" class="needs-validation"
+		novalidate>
+		<div class="mb-3">
+			<label for="departmentSelect" class="form-label">选择科室</label>
+			<select class="form-select" id="departmentSelect" name="departmentId" required>
+				<option value="" disabled selected>请选择科室</option>
+				<option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.name}"></option>
+			</select>
+			<div class="invalid-feedback">请选择一个科室</div>
+		</div>
+
+		<div class="mb-3">
+			<label for="appointmentTime" class="form-label">预约时间</label>
+			<input type="datetime-local" class="form-control" id="appointmentTime" name="appointmentTime" required>
+			<div class="invalid-feedback">请输入预约时间</div>
+		</div>
+
+		<div class="mb-3">
+			<label for="note" class="form-label">备注</label>
+			<input type="text" class="form-control" id="note" name="note" placeholder="如有特殊需求请备注">
+		</div>
+
+		<button type="submit" class="btn btn-success w-100">提交挂号</button>
+	</form>
+</div>
+
+<script>
+	// Bootstrap 表单校验 + 异步提交
+	(function () {
+		'use strict';
+		const form = document.querySelector('#departmentForm');
+		form.addEventListener('submit', function (event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			if (!form.checkValidity()) {
+				form.classList.add('was-validated');
+				return;
+			}
+
+			const formData = $(form).serialize();
+
+			$.post("/patient/register-department", formData)
+				.done(function () {
+					alert("✅ 挂号成功！");
+					form.reset();
+					form.classList.remove('was-validated');
+				})
+				.fail(function (xhr) {
+					alert("❌ 挂号失败：" + xhr.responseText);
+				});
+		}, false);
+	})();
+</script>

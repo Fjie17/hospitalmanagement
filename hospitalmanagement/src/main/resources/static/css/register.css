@@ -1,0 +1,63 @@
+/* 字体和背景 */
+body {
+	font-family: 'Poppins', sans-serif;
+	background: linear-gradient(to right, rgba(104, 163, 255, 0.5), rgba(164, 226, 255, 0.5)),
+		url('/images/bg-hospital.jpg') no-repeat center center/cover;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+/* 背景透明层 */
+.bg-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(6px);
+	z-index: -1;
+}
+
+/* 注册卡片美化 */
+.register-card {
+	max-width: 500px;
+	border-radius: 20px;
+	background-color: #ffffffee;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 标题样式 */
+h3 {
+	color: #3578e5;
+	font-weight: 600;
+}
+
+/* 表单样式细节 */
+.form-control,
+.form-select {
+	background-color: #f8f9fa;
+	border-radius: 10px;
+	box-shadow: none;
+}
+
+/* 按钮美化 */
+button.btn {
+	font-weight: 600;
+	transition: all 0.3s ease;
+	border-radius: 12px;
+}
+
+button.btn:hover {
+	transform: scale(1.03);
+}
+
+.btn-outline-secondary {
+	background-color: #f1f1f1;
+}
+
+/* 模态框样式 */
+.modal-content {
+	border-radius: 16px;
+}

@@ -1,0 +1,115 @@
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+<link rel="icon" href="data:,">
+
+<div class="container">
+	<h4 class="mb-3">医生评价</h4>
+
+	<form id="reviewForm" class="mb-4">
+		<div class="mb-3">
+			<label for="doctorSelect" class="form-label">选择医生：</label>
+			<select class="form-select" id="doctorSelect" required></select>
+		</div>
+
+		<div class="mb-3">
+			<label for="rating" class="form-label">评分：</label>
+			<select class="form-select" id="rating" required>
+				<option value="">请选择</option>
+				<option value="5">⭐️⭐️⭐️⭐️⭐️ (非常满意)</option>
+				<option value="4">⭐️⭐️⭐️⭐️ (满意)</option>
+				<option value="3">⭐️⭐️⭐️ (一般)</option>
+				<option value="2">⭐️⭐️ (不满意)</option>
+				<option value="1">⭐️ (很差)</option>
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label for="comment" class="form-label">评价内容：</label>
+			<textarea class="form-control" id="comment" rows="3" required></textarea>
+		</div>
+
+		<button type="submit" class="btn btn-primary">提交评价</button>
+	</form>
+
+	<hr>
+	<h5>已有评价：</h5>
+	<div id="reviewList"></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function () {
+		// 加载医生列表
+		$.get("/patient/review/doctors", function (doctors) {
+			doctors.forEach(function (doc) {
+				$("#doctorSelect").append(`<option value="${doc.id}">${doc.name}（${doc.title || "暂无职称"}）</option>`);
+			});
+		});
+
+		// 表单提交
+		$("#reviewForm").submit(function (e) {
+			e.preventDefault();
+			const data = {
+				doctorId: $("#doctorSelect").val(),
+				rating: $("#rating").val(),
+				comment: $("#comment").val()
+			};
+			$.ajax({
+				url: "/patient/review/add",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				beforeSend: function (xhr) {
+					const token = $('meta[name="_csrf"]').attr('content');
+					const header = $('meta[name="_csrf_header"]').attr('content');
+					xhr.setRequestHeader(header, token);
+				},
+				success: function (response) {
+					if (response === "success") {
+						alert("提交成功！");
+						loadReviews(data.doctorId);
+						$("#comment").val("");
+					} else {
+						alert("提交失败：" + response);
+					}
+				},
+				error: function (xhr, status, error) {
+					alert("提交失败，请稍后重试");
+					console.error("提交评价失败：", error);
+				}
+			});
+
+		});
+
+		// 监听医生下拉变化加载评价
+		$("#doctorSelect").change(function () {
+			const doctorId = $(this).val();
+			if (doctorId) {
+				loadReviews(doctorId);
+			}
+		});
+
+		function loadReviews(doctorId) {
+			$.get(`/patient/review/list/${doctorId}`, function (reviews) {
+				const container = $("#reviewList");
+				container.empty();
+				if (reviews.length === 0) {
+					container.html("<p class='text-muted'>暂无评价。</p>");
+				} else {
+					reviews.forEach(function (r) {
+						container.append(`
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <strong>评分：${"⭐️".repeat(r.rating)}</strong><br/>
+                                <p class="mb-0">${r.comment}</p>
+                            </div>
+                        </div>
+                    `);
+					});
+				}
+			});
+		}
+	});
+</script>

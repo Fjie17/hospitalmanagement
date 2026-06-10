@@ -1,0 +1,16 @@
+<div th:fragment="content">
+	<h5>病历填写</h5>
+	<form id="record-form">
+		<input type="hidden" name="patientId" th:value="${patientId}" />
+		<div class="mb-2">
+			<label>诊断</label>
+			<textarea name="diagnosis" class="form-control" rows="3" th:text="${record?.diagnosis}"></textarea>
+		</div>
+		<div class="mb-2">
+			<label>治疗</label>
+			<textarea name="treatment" class="form-control" rows="3" th:text="${record?.treatment}"></textarea>
+		</div>
+		<button type="submit" class="btn btn-success">保存</button>
+	</form>
+	<div id="save-result" class="mt-2"></div>
+</div>

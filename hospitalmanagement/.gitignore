@@ -1,0 +1,7 @@
+/target/
+.classpath
+.project
+.settings/
+src/main/resources/application.properties
+hs_err_pid*.log
+replay_pid*.log

@@ -1,0 +1,131 @@
+<!-- patient_profile.html -->
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<div class="card shadow-sm">
+	<div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+		<h5 class="mb-0">个人信息</h5>
+		<button type="button" class="btn btn-light btn-sm" id="editBtn">修改</button>
+	</div>
+
+	<div class="card-body">
+		<form id="profileForm"> <!-- ❶ 不使用 th:action -->
+			<dl class="row">
+				<dt class="col-sm-3">用户名</dt>
+				<dd class="col-sm-9" th:text="${patient.username}">示例用户名</dd>
+
+				<dt class="col-sm-3">姓名</dt>
+				<dd class="col-sm-9" th:text="${patient.name}">张三</dd>
+
+				<dt class="col-sm-3">性别</dt>
+				<dd class="col-sm-9" th:text="${patient.gender}">男</dd>
+
+				<dt class="col-sm-3">电话</dt>
+				<dd class="col-sm-9">
+					<span class="view-mode" id="phoneView" th:text="${patient.phone}">13800138000</span>
+					<input class="edit-mode form-control" type="text" name="phone" th:value="${patient.phone}"
+						style="display: none;">
+				</dd>
+
+				<dt class="col-sm-3">出生日期</dt>
+				<dd class="col-sm-9" th:text="${patient.birthDate}">1990-01-01</dd>
+
+				<dt class="col-sm-3">密码</dt>
+				<dd class="col-sm-9">
+					<span class="view-mode">******</span>
+					<input class="edit-mode form-control" type="password" name="password" placeholder="新密码（可不填）"
+						style="display: none;">
+				</dd>
+			</dl>
+
+			<div class="text-end mt-3 edit-mode" style="display: none;">
+				<button type="submit" class="btn btn-success">保存</button>
+				<button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- 弹窗容器（初始不显示） -->
+<div id="success-alert" class="alert alert-success position-fixed top-0 end-0 m-4 shadow"
+	style="display:none; z-index:9999;">
+	保存成功！
+</div>
+
+<script>
+	const editBtn = document.getElementById("editBtn");
+	const cancelBtn = document.getElementById("cancelBtn");
+	const form = document.getElementById("profileForm");
+	const phoneView = document.getElementById("phoneView"); // 显示手机号的元素
+
+	// 手机号校验函数（简单示例，调整正则适合你需求）
+	function validatePhone(phone) {
+		const phoneRegex = /^1[3-9]\d{9}$/; // 中国手机号简单验证
+		return phoneRegex.test(phone);
+	}
+
+	// 进入编辑模式
+	editBtn.addEventListener("click", () => {
+		document.querySelectorAll(".view-mode").forEach(el => el.style.display = "none");
+		document.querySelectorAll(".edit-mode").forEach(el => el.style.display = "block");
+		editBtn.style.display = "none";
+	});
+
+	// 取消编辑
+	cancelBtn.addEventListener("click", () => {
+		document.querySelectorAll(".edit-mode").forEach(el => el.style.display = "none");
+		document.querySelectorAll(".view-mode").forEach(el => el.style.display = "inline");
+		editBtn.style.display = "inline-block";
+	});
+
+	// 保存表单
+	form.addEventListener("submit", function (e) {
+		e.preventDefault();
+
+		const formData = new FormData(form);
+		const phone = formData.get("phone");
+
+		// 校验手机号格式
+		if (!validatePhone(phone)) {
+			alert("请输入有效的手机号！");
+			return; // 阻止提交
+		}
+
+		const token = document.querySelector('meta[name="_csrf"]').content;
+		const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+		fetch("/patient/profile/save", {
+			method: "POST",
+			body: new URLSearchParams([...formData.entries()]),
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+				[header]: token
+			}
+		})
+			.then(res => {
+				if (!res.ok) throw new Error("保存失败");
+				return res.text();
+			})
+			.then(() => {
+				showSuccessAlert();
+
+				// 回退查看模式
+				document.querySelectorAll(".edit-mode").forEach(el => el.style.display = "none");
+				document.querySelectorAll(".view-mode").forEach(el => el.style.display = "inline");
+				editBtn.style.display = "inline-block";
+
+				// 更新手机号展示
+				phoneView.textContent = phone;
+			})
+			.catch(() => alert("保存失败"));
+	});
+
+	function showSuccessAlert() {
+		const alertBox = document.getElementById("success-alert");
+		alertBox.style.display = "block";
+		setTimeout(() => {
+			alertBox.style.display = "none";
+		}, 2000);
+	}
+
+</script>

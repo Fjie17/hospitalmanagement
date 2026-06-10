@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>医生列表 - 医院信息管理系统</title>
+	<link rel="stylesheet" href="/css/index.css">
+	<style>
+		html,
+		body {
+			height: auto;
+			min-height: 100vh;
+			overflow-y: auto;
+		}
+
+		body {
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f5f7fa;
+			margin: 0;
+			padding: 2rem;
+		}
+
+		h1 {
+			color: #005caa;
+			text-align: center;
+			margin-bottom: 2rem;
+		}
+
+		.doctor-list-container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 10px;
+		}
+
+		.doctor-cards {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1.5rem;
+			justify-content: center;
+		}
+
+		.doctor-card {
+			position: relative;
+			width: 280px;
+			padding: 1.5rem;
+			border-radius: 12px;
+			overflow: hidden;
+			color: #333;
+			background-size: cover;
+			background-position: center;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+			transition: 0.3s ease-in-out;
+		}
+
+		.doctor-card::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 0;
+		}
+
+		.doctor-card h3,
+		.doctor-card p {
+			position: relative;
+			z-index: 1;
+		}
+
+		.doctor-card h3 {
+			font-size: 1.3rem;
+			margin-bottom: 0.6rem;
+			color: #005caa;
+			font-weight: 600;
+		}
+
+		.doctor-card p {
+			font-size: 1rem;
+			margin: 0.4rem 0;
+			color: #333;
+		}
+
+		.doctor-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+		}
+
+		.back-link {
+			display: block;
+			max-width: 1200px;
+			margin: 2rem auto;
+			text-align: right;
+		}
+
+		.back-link a {
+			color: #007bff;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 1rem;
+		}
+
+		.back-link a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>全部医生列表</h1>
+
+	<div class="doctor-list-container">
+		<div class="doctor-cards">
+			<div class="doctor-card" th:each="doctor : ${doctors}"
+				th:style="|background-image: url('/images/bg-${doctor.gender == '女' ? 'female' : 'male'}.png');|">
+				<h3 th:text="${doctor.name}">医生姓名</h3>
+				<p><strong>科室：</strong><span th:text="${doctor.departmentName}">内科</span></p>
+				<p><strong>电话：</strong><span th:text="${doctor.phone}">123456</span></p>
+				<p><strong>职位：</strong><span th:text="${doctor.title}">主任医师</span></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="back-link">
+		<a href="/">← 返回首页</a>
+	</div>
+
+</body>
+
+</html>

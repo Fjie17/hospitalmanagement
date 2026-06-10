@@ -1,0 +1,38 @@
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<div class="card">
+	<div class="card-header bg-primary text-white">我的预约</div>
+	<div class="card-body">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>病人姓名</th>
+					<th>预约时间</th>
+					<th>状态</th>
+					<th>备注</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="a : ${appointments}">
+					<td th:text="${a.patientName}">张三</td>
+					<td th:text="${a.appointmentTime}">2025-07-01 10:00</td>
+					<td>
+						<select class="form-select status-select" th:data-id="${a.id}">
+							<option value="待确认" th:selected="${a.status == '待确认'}">待确认</option>
+							<option value="已确认" th:selected="${a.status == '已确认'}">已确认</option>
+							<option value="已取消" th:selected="${a.status == '已取消'}">已取消</option>
+						</select>
+					</td>
+					<td>
+						<input type="text" class="form-control note-input" th:data-id="${a.id}" th:value="${a.note}" />
+					</td>
+					<td>
+						<button class="btn btn-sm btn-primary save-btn" th:data-id="${a.id}">保存</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

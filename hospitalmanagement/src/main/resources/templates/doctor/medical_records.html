@@ -1,0 +1,21 @@
+<div th:fragment="content">
+	<h4>我的病历记录</h4>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>病人姓名</th>
+				<th>诊断</th>
+				<th>治疗</th>
+				<th>记录时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="record : ${records}">
+				<td th:text="${record.patient.name}"></td>
+				<td th:text="${record.diagnosis}"></td>
+				<td th:text="${record.treatment}"></td>
+				<td th:text="${#dates.format(record.recordDate, 'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
