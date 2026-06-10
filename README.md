@@ -160,18 +160,6 @@ hospitalmanagement/
 
 ### 核心实体关系
 
-```mermaid
-erDiagram
-    Department ||--o{ Doctor : "所属科室"
-    Patient ||--o{ Appointment : "发起预约"
-    Doctor ||--o{ Appointment : "接收预约"
-    Patient ||--o{ MedicalRecord : "就诊记录"
-    Doctor ||--o{ MedicalRecord : "填写病历"
-    Doctor ||--o{ Schedule : "出诊排班"
-    Doctor ||--o{ DoctorReview : "收到评价"
-    Patient ||--o{ DoctorReview : "提交评价"
-    Admin ||--o{ Notice : "发布公告"
-```
 
 | 实体 | 说明 |
 |------|------|
